@@ -1,4 +1,4 @@
-package com.example.calendartest2;
+package com.example.ufthack;
 
 import org.junit.Test;
 

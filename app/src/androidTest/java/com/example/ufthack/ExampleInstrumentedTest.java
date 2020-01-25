@@ -1,4 +1,4 @@
-package com.example.calendartest2;
+package com.example.ufthack;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.calendartest2", appContext.getPackageName());
+        assertEquals("com.example.ufthack", appContext.getPackageName());
     }
 }

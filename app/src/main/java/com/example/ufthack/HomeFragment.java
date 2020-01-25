@@ -1,6 +1,23 @@
-package com.example.calendartest2;
+package com.example.ufthack;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.applandeo.materialcalendarview.CalendarView;
+import com.applandeo.materialcalendarview.EventDay;
+import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
+import com.applandeo.materialcalendarview.listeners.OnCalendarPageChangeListener;
+import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import android.os.Bundle;
 
@@ -15,20 +32,22 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeFragment extends Fragment {
+    View view;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_home, container, false);
 
         List<EventDay> events = new ArrayList<>();
-
         Calendar calendar = Calendar.getInstance();
         calendar.set(2020, 1, 2);
         events.add(new EventDay(calendar, R.drawable.smoke));
+        calendar.set(2020, 1, 2);
+        events.add(new EventDay(calendar, R.drawable.smoke));
 
-        CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
+        CalendarView calendarView = (CalendarView) view.findViewById(R.id.calendarView);
         try {
             calendarView.setDate(new Date());
         } catch (OutOfDateRangeException e) {
@@ -41,9 +60,17 @@ public class MainActivity extends AppCompatActivity {
             public void onDayClick(EventDay eventDay) {
                 Calendar clickedDayCalendar = eventDay.getCalendar();
                 System.out.println("---------------------------------");
+                String message = "";
+                message += clickedDayCalendar.getTime().getDate() + "-";
+                message += clickedDayCalendar.getTime().getMonth() + "-";
+                message += clickedDayCalendar.getTime().getYear();
+
                 System.out.println(clickedDayCalendar.getTime().getDate());
                 System.out.println(clickedDayCalendar.getTime().getMonth());
                 System.out.println(clickedDayCalendar.getTime().getYear());
+                Intent intent = new Intent(Main2Activity.ACTIVITY_HANDLE, VapeViewActivity.class);
+                intent.putExtra("date", message);
+                startActivity(intent);
             }
         });
 
@@ -66,5 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("next");
             }
         });
+
+        return view;
     }
 }
